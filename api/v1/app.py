@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ A flask application"""
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from werkzeug.exceptions import NotFound
 from models import storage
 from api.v1.views import app_views
@@ -14,13 +14,11 @@ def teardown_appcontext(exception):
     storage.close()
 
 @app.errorhandler(NotFound)
-def handle_not_found_error(e):
+def handle_not_found(error):
     response = jsonify({"error": "Not found"})
     response.status_code = 404
     return response
 
-
 if __name__ == "__main__":
-    app_host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    app_port = int(os.getenv("HBNB_API_PORT", "5000"))
-    app.run(host=app_host, port=app_port, threaded=True)
+    app.run(host=getenv("HBNB_API_HOST", "0.0.0.0"),
+            port=int(getenv("HBNB_API_PORT", "5000")), threaded=True)
