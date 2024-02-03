@@ -3,6 +3,9 @@
 """
 This module contains the principal application
 """
+
+import os
+
 from models import storage
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify
